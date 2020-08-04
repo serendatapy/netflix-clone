@@ -66,3 +66,19 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### How the program works
+
+The program mainly consists of rows of 1 row component, which draws it's data from a movie database API.
+
+1. App.js Renders all the components, namely Row and Banner, changing only the API calls mostly.
+2. Row.js give the layout for the row to be rendered. It uses a state to store
+the movies array that is fetched Async through the useEffect function. Then through a map function it displays all the movies from the result.
+It also implements conditional styling for the Netflix Originals row.
+3. Banner.js lays out the banner for the topmost part of the app. It also uses a useState to store a movie (randomly selected) that is fetched Async through
+its useEffect function. It implements a trucate function to make sure the
+description of the banner remains the same length, and a fade div at the bottom
+to make the banner blend into the row components more naturally.
+4. There are a couple of auxilirary js files
+  *  requests.js contains a list of queries to make it easier to draw addresses
+  *  axios.js makes it easier to implement requests to server, without needing to write out all the promises code.
