@@ -121,5 +121,6 @@ Note about useEffect: Whenever you pull in a variable from outside (fetchUrl)
   else
   Check we have a movie name(in case search returned null) else close it.
   with returned url, extract only the part we needs from Url
+  https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
   then save it to the state trailerUrl
 
