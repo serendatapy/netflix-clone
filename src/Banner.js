@@ -5,7 +5,7 @@ import './Banner.css'
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 
-export default function Banner({}) {
+export default function Banner() {
   console.log("Rendering Banner");
   const [movie, setMovie] = useState([]);
 

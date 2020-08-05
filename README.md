@@ -70,6 +70,13 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ### How the program works
 
 The program mainly consists of rows of 1 row component, which draws it's data from a movie database API.
+The program uses 2 packages
+-npm i react-youtube
+https://www.npmjs.com/package/react-youtube
+https://developers.google.com/youtube/player_parameters
+
+-npm i movie-trailers
+which allows the application to run movie trailers.
 
 1. App.js Renders all the components, namely Row and Banner, changing only the API calls mostly.
 2. Row.js give the layout for the row to be rendered. It uses a state to store

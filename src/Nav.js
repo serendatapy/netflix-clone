@@ -37,6 +37,7 @@ function Nav() {
 export default Nav;
 
 /*
+Notice that the navbar's background changes as one scrolls down.
 We use useEffect here to change the style in the nav bar.
 It sets a listener to listen for the scroll on the Y axis (up/down)
 if the scroll is greater than 100px, then set handleShow to true
