@@ -64,37 +64,3 @@ export default function Row({ title, fetchUrl, isLargeRow }) {
     </div>
   );
 }
-
-/*Note about useEffect: Whenever you pull in a variable from outside (fetchUrl)
-  it MUST be included in the dependencies. Otherwise if the
-  Url changes, objects won't be re-rendered. It IS a dendency
-  because the rendering depends on it!
-  Note2: inside use effect, you must define then call async
-  function, can't just run async
-
-  handleClickMovie - if there is already a trailer playing, close it
-  else
-  movieTrailer(movie?.name)
-  look for a trailer with that movie name or nothing if null,
-  this function comes from movieTrailer import
-  then
-  get the movie id. URLSearchParams allows us to specify what
-  we want to get from the url. in this case everyhing after 'v'
-  get the url id
-  catch
-  error
-
-  const handleClick = (movie) => {
-    if(trailerUrl) {
-      setTrailerUrl('');
-    } else {
-      movieTrailer(movie?.name || "")
-      .then((url) => {
-        //https://www.youtube.com/watch?v=oyk0WPTQlhg
-        const urlParams = new URLSearchParams(new URL(url).search);
-        setTrailerUrl(urlParams.get('v'));
-      })
-      .catch((error) => console.log(error));
-    }
-  }
-  */

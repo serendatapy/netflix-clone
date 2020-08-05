@@ -80,8 +80,11 @@ which allows the application to run movie trailers.
 
 1. App.js Renders all the components, namely Row and Banner, changing only the API calls mostly.
 2. Row.js give the layout for the row to be rendered. It uses a state to store
-the movies array that is fetched Async through the useEffect function. Then through a map function it displays all the movies from the result.
+the movies array that is fetched Async through the useEffect function.
+Then through a map function it displays all the movies from the result.
 It also implements conditional styling for the Netflix Originals row.
+Instead to play the movie trailers it implements the functionality of another 2 libraries. See Row extra Notes at the bottom
+
 3. Banner.js lays out the banner for the topmost part of the app. It also uses a useState to store a movie (randomly selected) that is fetched Async through
 its useEffect function. It implements a trucate function to make sure the
 description of the banner remains the same length, and a fade div at the bottom
@@ -89,3 +92,34 @@ to make the banner blend into the row components more naturally.
 4. There are a couple of auxilirary js files
   *  requests.js contains a list of queries to make it easier to draw addresses
   *  axios.js makes it easier to implement requests to server, without needing to write out all the promises code.
+5. Nav.js the navBar is essentially a fixed bar at the top with a couple of icons. It achieves it's fade in/out
+through a useEffect and scroll listener to activate conditional styling.
+
+#### Row extra notes
+Note about useEffect: Whenever you pull in a variable from outside (fetchUrl)
+  it MUST be included in the dependencies. Otherwise if the
+  Url changes, objects won't be re-rendered. It IS a dendency
+  because the rendering depends on it!
+  Note2: inside use effect, you must define then call async
+  function, can't just run async
+
+  Here row implements 2 imported libraries, react-youtube and movie-traile
+  *react-youtube gives the YouTube component, and allows us to
+  play an imbedded movie on site
+  *movie-trailer gives us useful functions such as movieTrailer('movie'[options][callback])
+  this returns a URL, which we use in the .then function
+
+  We use also a function URLSearchParams, which creates an object that uses the url obtained.
+  This object allows us to call .get method, which enables us to extract the part of the url
+  that interests us. In this case after ('v').
+
+  we then useState to save the video 'id', which we then use with YouTube react to play our video
+  if found.
+
+  handleClickMovie -
+  if there is already a trailer URL, close it
+  else
+  Check we have a movie name(in case search returned null) else close it.
+  with returned url, extract only the part we needs from Url
+  then save it to the state trailerUrl
+
