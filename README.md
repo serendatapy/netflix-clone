@@ -1,3 +1,10 @@
+##Netflix Clone
+I made this app to practice using React and API calls. Currently
+the site is hosted on firebase at
+https://netflix-clone-61ca6.web.app/
+https://netflix-clone-61ca6.firebaseapp.com/
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
