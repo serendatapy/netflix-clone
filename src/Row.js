@@ -9,6 +9,7 @@ const base_url = "https://image.tmdb.org/t/p/original/";
 export default function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
+  const [lastMovie, setLastMovie] = useState("");
 
   const opts = {
     height: "390",
@@ -30,35 +31,51 @@ export default function Row({ title, fetchUrl, isLargeRow }) {
   }, [fetchUrl]);
 
   const handleClick = (movie) => {
-    if (trailerUrl) {
-      setTrailerUrl("");
-    } else {
-      movieTrailer(movie?.name || "")
-        .then((url) => {
-          //https://www.youtube.com/watch?v=oyk0WPTQlhg
-          const urlParams = new URLSearchParams(new URL(url).search);
-          setTrailerUrl(urlParams.get("v"));
-        })
-        .catch((error) => {
-          console.log("HANDLE ERROR GRACEFULLY", error);
+
+    movieTrailer(movie?.name || "")
+      .then((url) => {
+        //https://www.youtube.com/watch?v=oyk0WPTQlhg
+        const urlParams = new URLSearchParams(new URL(url).search);
+        const videoId = urlParams.get("v");
+
+        if (lastMovie === movie.name && trailerUrl !== "") setTrailerUrl("");
+        else {
+          setTrailerUrl(videoId);
+          setLastMovie(movie.name);
+        }
+      })
+      .catch((error) => {
+        console.log("HANDLE ERROR GRACEFULLY", error);
+        if (lastMovie === movie.name && trailerUrl !== "") setTrailerUrl("");
+        else {
+          setTrailerUrl("");
           setTrailerUrl("VV9BZC7-Ss8");
-        });
-    }
+          setLastMovie(movie.name);
+        }
+      });
   };
 
-  const experimentFunc = (isLargeRow) => {
-    let jsxArrOfMovies = movies.map((movie) => (
-      <img
-        key={movie.id}
-        onClick={() => handleClick(movie)}
-        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
-        src={`${base_url}${
-          isLargeRow ? movie.poster_path : movie.backdrop_path
-        }`}
-        alt={movie.name}
-      />
-    ));
-    console.log('JSX ARRAY OF MOVIES:',jsxArrOfMovies);
+  const jsxMovies = (isLargeRow) => {
+    let jsxArrOfMovies = movies.map((movie) => {
+      let movieSrc = `${base_url}${
+        isLargeRow ? movie.poster_path : movie.backdrop_path
+      }`;
+
+      if (movieSrc.slice(-4) !== "null") {
+        return (
+          <img
+            key={movie.id}
+            onClick={() => handleClick(movie)}
+            className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+            src={`${base_url}${
+              isLargeRow ? movie.poster_path : movie.backdrop_path
+            }`}
+            alt={movie.name}
+          />
+        );
+      }
+    });
+    //console.log("JSX ARRAY OF MOVIES:", jsxArrOfMovies);
     return jsxArrOfMovies;
   };
 
@@ -80,9 +97,7 @@ export default function Row({ title, fetchUrl, isLargeRow }) {
   return (
     <div className="row">
       <h2>{title}</h2>
-      <div className="row__posters">
-        {experimentFunc(isLargeRow)}
-      </div>
+      <div className="row__posters">{jsxMovies(isLargeRow)}</div>
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
